@@ -40,7 +40,7 @@ parser.add_argument(
 	help='Index of the test subset'
 )
 parser.add_argument(
-	'--dir', type=str, default="./data/",
+	'--dir', type=str, default="/home/atsg/dataset/data_casia2/",
 	help='Folder containing the extracted data'
 )
 parser.add_argument(
@@ -134,7 +134,6 @@ metrics = {
 	"acc_train": [],
 	"acc_valid": [],
 }
-
 
 # Create callbacks
 checkpoint = CheckPoint(

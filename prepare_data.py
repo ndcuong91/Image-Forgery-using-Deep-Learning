@@ -40,7 +40,7 @@ parser.add_argument(
 	help='Folder containing the extracted data'
 )
 parser.add_argument(
-	'--casia2_dir', type=str, default="/media/antiaegis/storing/datasets/CASIA2/",
+	'--casia2_dir', type=str, default="/media/atsg/Data/datasets/casia-dataset/CASIA2/",
 	help='Folder containing CASIA2 database'
 )
 parser.add_argument(
@@ -108,23 +108,23 @@ train_patches, valid_patches = patches.split_train_eval(
 # Read, crop, and save patches
 n_train = len(train_patches)
 print("Number of train samples:", n_train)
-patches.crop_and_save(
-	pools=pools,
-	data_patches=train_patches,
-	patch_sz=args.patch_sz,
-	out_dir=TRAIN_TP_DIR,
-	prefix="train_tp",
-)
+# patches.crop_and_save(
+# 	pools=pools,
+# 	data_patches=train_patches,
+# 	patch_sz=args.patch_sz,
+# 	out_dir=TRAIN_TP_DIR,
+# 	prefix="train_tp",
+# )
 
 n_valid = len(valid_patches)
 print("Number of valid samples:", n_valid)
-patches.crop_and_save(
-	pools=pools,
-	data_patches=valid_patches,
-	patch_sz=args.patch_sz,
-	out_dir=VALID_TP_DIR,
-	prefix="valid_tp",
-)
+# patches.crop_and_save(
+# 	pools=pools,
+# 	data_patches=valid_patches,
+# 	patch_sz=args.patch_sz,
+# 	out_dir=VALID_TP_DIR,
+# 	prefix="valid_tp",
+# )
 
 
 #------------------------------------------------------------------------------

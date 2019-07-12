@@ -37,7 +37,7 @@ tensorboard==1.10.0
 tensorflow==1.10.1
 termcolor==1.1.0
 torch==0.4.1
-torch-nightly==1.0.0.dev20181006
+#torch-nightly==1.0.0.dev20181006
 torchsummary==1.4
 torchvision==0.2.1
 tqdm==4.26.0

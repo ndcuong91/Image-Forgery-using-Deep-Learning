@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 import os, sys, json
 from tqdm import tqdm
 from itertools import repeat
-from libs import image
+from utils import image
 
 
 #------------------------------------------------------------------------------
@@ -179,11 +179,15 @@ def pool_crop_patch(args):
 	# Read, crop patch, and save
 	i = y + 16 - int(patch_sz/2)
 	j = x + 16 - int(patch_sz/2)
-	img_src = image.read(src_file, channel="RGB")
-	if (i >=0) and (j>=0) and (i+patch_sz<=img_src.shape[0]) and (j+patch_sz<=img_src.shape[1]):
-		patch = img_src[i:i+patch_sz, j:j+patch_sz, :]
-		dst_file = os.path.join(out_dir, "%s_%d.png" % (prefix, idx))
-		image.write(dst_file, patch)
+	if os.path.exists(src_file):
+		img_src = image.read(src_file, channel="RGB")
+		if (i >= 0) and (j >= 0) and (i + patch_sz <= img_src.shape[0]) and (j + patch_sz <= img_src.shape[1]):
+			patch = img_src[i:i + patch_sz, j:j + patch_sz, :]
+			dst_file = os.path.join(out_dir, "%s_%d.png" % (prefix, idx))
+			image.write(dst_file, patch)
+	else:
+		print ('file not exist: ', src_file)
+
 
 
 def crop_and_save(pools, data_patches, patch_sz, out_dir, prefix):
@@ -215,9 +219,10 @@ def create_neg_based_on_pos(N_pos, fnames, out_file, au_dir):
 
 	fp = open(out_file, "w")
 	for i, file in enumerate(files):
-		img = cv2.imread(file)
-		corner = gen_patch_corners(img.shape, N_neg)
-		write_to_file(fp, fnames[i], corner)
+		if os.path.exists(file):
+			img = cv2.imread(file)
+			corner = gen_patch_corners(img.shape, N_neg)
+			write_to_file(fp, fnames[i], corner)
 	fp.close()
 
 
