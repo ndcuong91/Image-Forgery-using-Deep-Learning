@@ -32,6 +32,11 @@ pools = Pool(processes=cpu_count())
 # GT = IMAGE_FILE.split("/")[-1][:2]
 # GT = "Positive" if GT=="Tp" else "Negative"
 
+params={}
+params["channel"] = "RGB"
+params["threshold"] = 0.645
+params["training_log_dir"] = "../models/MBN2-mod-RGB/checkpoints/"
+
 def get_list_dir_in_folder(dir):
     sub_dir = [o for o in os.listdir(dir) if os.path.isdir(os.path.join(dir, o))]
     return sub_dir
@@ -65,12 +70,12 @@ def detect_image(filename):
     return decision  #1 fake, 0 real
 
 
-params={}
-params["channel"] = "YCbCr"
-params["threshold"] = 0.645
-params["training_log_dir"] = "../backup/MBN2-mod-YCbCr/checkpoints/"
+
+params["training_log_dir"] = "../backup/MBN2-mod-RGB/checkpoints/"
 
 MODEL_FILE = os.path.join(params["training_log_dir"], "model.ckpt")
+
+#MODEL_FILE = os.path.join(params["training_log_dir"], "checkpoint-epoch5-loss0.014503.ckpt")
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = MobileNetV2(n_classes=2).to(device=DEVICE)
@@ -102,7 +107,7 @@ for dir in all_dir:
 
 
 
-for dir in fake_dir:
+for dir in real_dir:
     print (dir),
     count=0
     true_pred=0
@@ -110,11 +115,9 @@ for dir in fake_dir:
     for file in all_files:
         count+=1
         pred=detect_image(os.path.join(data_dir,dir,file))
-        if(pred==1):
+        if(pred==0):
             true_pred+=1
     print ('True pred:',true_pred,', Total:',count,', Accuracy of fake image: ',float(true_pred)/float(count))
-
-
 
 
 

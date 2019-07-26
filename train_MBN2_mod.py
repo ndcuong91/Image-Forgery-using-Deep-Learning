@@ -28,7 +28,7 @@ def check_directories(list_dirs):
 #------------------------------------------------------------------------------
 parser = argparse.ArgumentParser()
 parser.add_argument(
-	'--channel', type=str, default="RGB",
+	'--channel', type=str, default="YCbCr",
 	help='Color channel'
 )
 parser.add_argument(
